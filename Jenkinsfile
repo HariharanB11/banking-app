@@ -2,26 +2,22 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'us-east-1'                         // Change if using another region
-        AWS_ACCOUNT_ID = '841162688608'             // Replace with your AWS account ID
+        AWS_REGION = 'us-east-1'
+        AWS_ACCOUNT_ID = '841162688608'
         REPO_NAME = 'banking-app'
         ECR_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}"
-    }
-
-    tools {
-        sonarQube 'SonarScanner'                         // Match name from Jenkins Global Tool Config
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/<your-username>/banking-app.git'
+                git url: 'https://github.com/HariharanB11/banking-app.git'
             }
         }
 
         stage('SonarQube Code Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {          // Match name from Jenkins System Config
+                withSonarQubeEnv('SonarQube') {
                     sh 'sonar-scanner'
                 }
             }
