@@ -1,18 +1,19 @@
 const express = require('express');
+const path = require('path');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Health Check
-app.get('/', (req, res) => {
-  res.send('Welcome to Banking App');
-});
+app.use(express.static('public'));
 
-// Metrics endpoint for Prometheus
+app.get('/health', (req, res) => res.send('OK'));
 app.get('/metrics', (req, res) => {
   res.set('Content-Type', 'text/plain');
   res.send('# HELP banking_app_requests_total Total requests\nbanking_app_requests_total 1');
 });
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
 
 app.listen(port, () => {
-  console.log(`Banking App listening at http://localhost:${port}`);
+  console.log(`Banking App running at http://localhost:${port}`);
 });
