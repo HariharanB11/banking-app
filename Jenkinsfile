@@ -9,12 +9,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/HariharanB11/banking-app.git'
-            }
-        }
-
+        // Checkout is done automatically from SCM section
         stage('SonarQube Code Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
@@ -65,3 +60,4 @@ pipeline {
         }
     }
 }
+
